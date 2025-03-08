@@ -18,6 +18,9 @@ public:
     inline float g() const { return e[1]; }
     inline float b() const { return e[2]; }
 
+    inline bool operator==(const Vec3 &v) const {
+        return e[0] == v.e[0] && e[1] == v.e[1] && e[2] == v.e[2];
+    }
     inline Vec3 operator-() const{
         return Vec3(-e[0], -e[1], -e[2]);
 

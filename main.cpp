@@ -9,9 +9,9 @@
 using namespace std;
 
 vector<Sphere> spheres = {
-        // Sphere(Vec3(1, 0, -1), 0.5),
-        // Sphere(Vec3(-1, 0, -1), 0.5),
-        Sphere(Vec3(0, 0, -1), 0.5),
+        Sphere(Vec3(1, 0, -5), 0.5),
+        Sphere(Vec3(-1, 0, -3), 0.5),
+        Sphere(Vec3(0, 0, -5), 0.5),
 };
 
 Vec3 origin(0, 0, 0);
@@ -26,11 +26,10 @@ struct Light{
     }
 };
 vector<Light> lights = {
-    // Light(cos(120), sin(120), 0, 0, 0, 1),
-    Light(1, 1, 0, 0, 1, 0),
+    // Light(1, 1, 0, 0, 1, 0),
     Light(-1, 1, 0, 1, 0, 0)
 };
-Plane plane(0, 1, 0, 0);
+
 Vec3 color(const Ray& r){
 
     for(auto &s : spheres){

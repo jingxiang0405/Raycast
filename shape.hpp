@@ -15,7 +15,7 @@ private:
 class Plane {
 public:
     Plane(float a, float b, float c, float d);
-    float intersect(Ray &r);
+    float intersect(const Ray &r);
 
 private:
 

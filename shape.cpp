@@ -16,8 +16,7 @@ float Sphere::intersect(const Ray& r) const {
 
 Plane::Plane(float a, float b, float c, float d) : _coefficient(a, b, c), _d(d){}
 
-float Plane::intersect(Ray &r){
+float Plane::intersect(const Ray &r){
     float t = (_d - (dot(r.origin(), _coefficient))) / dot(r.direction(), _coefficient);
-    std::cout << "[Plane::intersect()] t=" << t << std::endl;
     return t;
 }
