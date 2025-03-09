@@ -8,10 +8,13 @@
 
 using namespace std;
 
-vector<Sphere> spheres = {
-        Sphere(Vec3(1, 0, -5), 0.5),
-        Sphere(Vec3(-1, 0, -3), 0.5),
-        Sphere(Vec3(0, 0, -5), 0.5),
+vector<Shape*> shapes = {
+
+    new Sphere(Vec3(1, 1, -5), 0.5),
+    new Sphere(Vec3(-1, 1, -3), 0.5),
+    new Sphere(Vec3(1, 0, -1), 0.5),
+    new Sphere(Vec3(-1, 1, -1), 0.5),
+    new Cube(Vec3(-3, 0, -6), Vec3(-5, -2, -4))
 };
 
 Vec3 origin(0, 0, 0);
@@ -26,25 +29,27 @@ struct Light{
     }
 };
 vector<Light> lights = {
-    // Light(1, 1, 0, 0, 1, 0),
-    Light(-1, 1, 0, 1, 0, 0)
+    Light(10, 0, 0, 1, 0, 0),
+    Light(-10, 0, 0, 0, 1, 0)
 };
 
 Vec3 color(const Ray& r){
 
-    for(auto &s : spheres){
+    for(auto &s : shapes){
 
-        float t =  s.intersect(r);
+        float t =  s->intersect(r);
 
         // sphere
         if (t > 0.0) {
 
             // shading
             // Normal
-            Vec3 N = unit_vector(r.point_at_parameter(t) - s.getCenter());
+            Vec3 point = r.pointAtParameter(t);
+            Vec3 N = s->normalAtPoint(point);
+
             Vec3 color(0, 0, 0);
             for(auto &l : lights){
-                Vec3 L = unit_vector(l.source - r.point_at_parameter(t));
+                Vec3 L = unit(l.source - point);
                 float lightness = max(0.0f, dot(N, L));
 
                 color += lightness * l.intensity;
@@ -59,9 +64,9 @@ Vec3 color(const Ray& r){
 
     }
     // background
-    Vec3 unit_direction = unit_vector(r.direction());
+    Vec3 unit_direction = unit(r.direction());
     float t = 0.5 * (unit_direction.y() + 1.0);
-    return (1.0-t)* Vec3(1, 1, 1) + t* Vec3(0.5, 0.7, 1.0);
+    return (1.0-t)* Vec3(1, 1, 1) + t* Vec3(0.2, 0.7, 1.0);
 }
 int main(int argc, char *argv[]) {
     int width = 2000;
@@ -78,7 +83,7 @@ int main(int argc, char *argv[]) {
             float u = float(i) / float(width);
             float v = float(j) / float(height);
             Vec3 uvcenter = lower_left_corner + u * horizontal + v * vertical;
-            Ray r(origin, unit_vector(uvcenter - origin));
+            Ray r(origin, unit(uvcenter - origin));
             Vec3 c = color(r);
 
             file << int(c.r() * 255) << " " << int(c.g() * 255) << " " << int(c.b() * 255) << "\n";

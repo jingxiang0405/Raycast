@@ -65,7 +65,7 @@ public:
         return (e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
     }
 
-    inline void make_unit_vector() { *this /= length(); }
+    inline void make_unit() { *this /= length(); }
 
     float e[3];
 };
@@ -83,7 +83,7 @@ inline Vec3 cross(const Vec3 &v1, const Vec3 &v2) {
 }
 
 inline Vec3 operator*(const float t, const Vec3 v) { return Vec3(v.e[0] * t, v.e[1] * t, v.e[2] * t); }
-inline Vec3 unit_vector(Vec3 v) {
+inline Vec3 unit(Vec3 v) {
     Vec3 result;
     float l = result.length();
     result.e[0] = v.e[0] / l;

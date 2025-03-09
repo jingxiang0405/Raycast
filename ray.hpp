@@ -12,7 +12,7 @@ public:
   }
   Vec3 origin() const { return O; }
   Vec3 direction() const { return D; }
-  Vec3 point_at_parameter(float t) const
+  Vec3 pointAtParameter(float t) const
   {
         return t * D + O;
   }
